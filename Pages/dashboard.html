@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard | Autosense Smartroom</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">autosense smartroom.</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="process.html">The Process</a></li>
+    <li><a href="energy.html">Daily Report</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<div class="panel">
+
+  <h2 style="color:var(--primary); margin-bottom:20px;">Live Room Status</h2>
+
+  <div class="card">
+    <h3>Motion</h3>
+    <p id="motionStatus">--</p>
+  </div>
+
+  <!-- LIGHT CARD -->
+  <div class="card">
+    <h3>Light</h3>
+    <p id="lightStatus">--</p>
+
+    <div style="margin-top:10px; display:flex; gap:8px;">
+      <button id="lightAuto" class="cta small">AUTO</button>
+      <button id="lightOn" class="cta small">ON</button>
+      <button id="lightOff" class="cta small">OFF</button>
+    </div>
+  </div>
+
+  <!-- FAN CARD -->
+  <div class="card">
+    <h3>Fan</h3>
+    <p id="fanStatus">--</p>
+
+    <div style="margin-top:10px; display:flex; gap:8px;">
+      <button id="fanAuto" class="cta small">AUTO</button>
+      <button id="fanOn" class="cta small">ON</button>
+      <button id="fanOff" class="cta small">OFF</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Temperature</h3>
+    <p id="tempValue">-- °C</p>
+  </div>
+
+  <div class="card">
+    <h3>Humidity</h3>
+    <p id="humValue">-- %</p>
+  </div>
+
+  <div class="card">
+    <h3>Night Mode</h3>
+    <p id="nightModeStatus">--</p>
+  </div>
+
+  <div class="card">
+    <h3>Today's Usage</h3>
+    <p id="todayUsage">--</p>
+  </div>
+
+  <div class="card">
+    <h3>Last Updated</h3>
+    <p id="lastUpdate">--</p>
+  </div>
+
+  <!-- ⭐ NEW ALERT CARD -->
+  <div class="card">
+    <h3>Alerts</h3>
+    <p id="alertBox">No alerts yet</p>
+  </div>
+
+</div>
+
+<script src="../JS/navbar.js"></script>
+<script type="module" src="../JS/dashboard.js"></script>
+
+</body>
+</html>

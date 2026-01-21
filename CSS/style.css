@@ -1,0 +1,273 @@
+/* ================================
+   GLOBAL THEME + RESET
+================================ */
+:root {
+  --primary: #0b4f46;
+  --primary-light: #e9f4f3;
+  --dark: #111;
+  --text: #222;
+  --bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ================================
+   NAVIGATION BAR
+================================ */
+.nav {
+  width: 100%;
+  padding: 18px 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ================================
+   HERO SECTION (HOME)
+================================ */
+.hero {
+  height: 55vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  background: linear-gradient(#e9f4f3, #ffffff); /* fallback */
+  position: relative;
+}
+
+/* Left side text block */
+.hero-left {
+  max-width: 480px;
+}
+
+.hero-left h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.cute-line {
+  color: #0b4f46;
+  font-weight: 500;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: #333;
+  margin-top: 10px;
+  line-height: 1.5;
+  max-width: 420px;
+}
+
+/* CTA BUTTON */
+a.cta,
+.cta {
+  display: inline-block;
+  margin-top: 20px;
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-size: 15px;
+  text-decoration: none; /* remove underline */
+  transition: transform .12s ease, opacity .12s ease;
+  box-shadow: 0 6px 18px rgba(11,79,70,0.15);
+}
+
+a.cta:link,
+a.cta:visited {
+  color: #fff;
+}
+
+a.cta:hover,
+a.cta:focus {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Right side hero image */
+.hero-image {
+  width: 380px;
+  height: 380px;
+  background-image: url("../Assets/home-bg.jpg"); /* fixed extension */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ================================
+   HOME FEATURE GRID
+================================ */
+.home-section {
+  padding: 40px 60px;
+}
+
+.home-section h2 {
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+
+.home-section .desc {
+  font-size: 16px;
+  max-width: 760px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.fcard {
+  background: white;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: 0.2s ease;
+}
+
+.fcard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.fcard i {
+  width: 22px;
+  height: 22px;
+  color: var(--primary);
+}
+
+.fcard h3 {
+  margin: 10px 0 4px;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.fcard p {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* ================================
+   DASHBOARD PANEL
+================================ */
+/* Dashboard layout */
+.panel {
+  padding: 40px 60px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px; /* more spacing for cleaner layout */
+}
+
+/* Each box */
+.card {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 120px;   /* ensures equal card height */
+}
+
+/* Card title */
+.card h3 {
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+/* Card text value */
+.card p {
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+/* Buttons inside card */
+.card button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.card button:hover {
+  opacity: 0.9;
+}
+
+
+.card h3 {
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+/* ================================
+   FOOTER
+================================ */
+.footer {
+  padding: 15px;
+  text-align: center;
+  color: #666;
+  margin-top: 40px;
+}

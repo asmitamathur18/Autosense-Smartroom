@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Energy Report | Autosense Smartroom</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">autosense smartroom.</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="process.html">The Process</a></li>
+    <li><a href="energy.html" class="active">Daily Report</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<div class="panel">
+  <h2 style="color:var(--primary); margin-bottom:20px;">Daily Energy Report</h2>
+  <p>Select a date to view the estimated total usage.</p>
+
+  <input type="date" id="dateInput" style="margin-top:15px; padding:6px 10px;">
+  <button onclick="generateReport()" style="margin-left:10px; padding:6px 12px;">Generate</button>
+
+  <div id="reportOutput" style="margin-top:25px; font-size:18px;"></div>
+</div>
+
+<script src="../JS/navbar.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIEnJWAOkjgy2qcttKHeKKN2-I-RWPFflA",
+  authDomain: "autosense-smart-room.firebaseapp.com",
+  databaseURL: "https://autosense-smart-room-default-rtdb.firebaseio.com",
+  projectId: "autosense-smart-room",
+  storageBucket: "autosense-smart-room.firebasestorage.app",
+  messagingSenderId: "185700599782",
+  appId: "1:185700599782:web:a52e02217a31d2c363f827",
+  measurementId: "G-ELKRTGF7S4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ============================================================
+   ADD DEMO LOGS FOR LAST 7 DAYS
+   ============================================================ */
+(async () => {
+  const now = Date.now();
+
+  function randomMinutes(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min) * 60000;
+  }
+
+  for (let day = 0; day < 7; day++) {
+    const base = now - (day * 86400000);
+
+    const lightDuration = randomMinutes(3, 8);
+    const fanDuration   = randomMinutes(3, 8);
+
+    const lightStart = base - (lightDuration + 600000);
+    const lightEnd   = lightStart + lightDuration;
+
+    const fanStart = base - (fanDuration + 300000);
+    const fanEnd   = fanStart + fanDuration;
+
+    await set(ref(db, `smartHome/state_history/${lightStart}`), {
+      timestamp: lightStart,
+      light: 1,
+      fan: 0
+    });
+
+    await set(ref(db, `smartHome/state_history/${lightEnd}`), {
+      timestamp: lightEnd,
+      light: 0,
+      fan: 0
+    });
+
+    await set(ref(db, `smartHome/state_history/${fanStart}`), {
+      timestamp: fanStart,
+      light: 0,
+      fan: 1
+    });
+
+    await set(ref(db, `smartHome/state_history/${fanEnd}`), {
+      timestamp: fanEnd,
+      light: 0,
+      fan: 0
+    });
+  }
+
+  console.log("Sample logs added.");
+})();
+
+/* ============================================================
+   GENERATE DAILY ENERGY REPORT
+   ============================================================ */
+window.generateReport = async function () {
+  const dateInput = document.getElementById("dateInput").value;
+  const output = document.getElementById("reportOutput");
+
+  if (!dateInput) {
+    output.innerHTML = "Please select a date.";
+    return;
+  }
+
+  const selected = new Date(dateInput);
+  const start = new Date(selected.setHours(0, 0, 0, 0)).getTime();
+  const end = new Date(selected.setHours(23, 59, 59, 999)).getTime();
+
+  const snap = await get(ref(db, "smartHome/state_history"));
+  if (!snap.exists()) {
+    output.innerHTML = "No data available.";
+    return;
+  }
+
+  const logs = Object.values(snap.val())
+    .filter(entry => entry.timestamp >= start && entry.timestamp <= end)
+    .sort((a, b) => a.timestamp - b.timestamp);
+
+  if (logs.length === 0) {
+    output.innerHTML = "No data for this day.";
+    return;
+  }
+
+  let lightMs = 0, fanMs = 0;
+
+  for (let i = 0; i < logs.length; i++) {
+    const current = logs[i];
+    const next = logs[i + 1];
+    const periodEnd = next ? next.timestamp : Date.now();
+    const duration = periodEnd - current.timestamp;
+
+    if (current.light === 1) lightMs += duration;
+    if (current.fan === 1) fanMs += duration;
+  }
+
+  const LIGHT_WATTS = 10;
+  const FAN_WATTS = 15;
+
+  const lightHours = (lightMs / 3600000).toFixed(2);
+  const fanHours = (fanMs / 3600000).toFixed(2);
+
+  const totalWh = (lightHours * LIGHT_WATTS) + (fanHours * FAN_WATTS);
+  const totalKWh = (totalWh / 1000).toFixed(4);
+
+  // ⭐ New: Calculate Power Conserved (baseline = 1hr light + 1hr fan)
+  const baselineKWh = ((1 * LIGHT_WATTS) + (1 * FAN_WATTS)) / 1000;
+  const savedKWh = (baselineKWh - totalKWh).toFixed(4);
+
+  output.innerHTML = `
+    <strong>Report for ${dateInput}</strong><br><br>
+
+    Light ON time: ${lightHours} hours<br>
+    Fan ON time: ${fanHours} hours<br><br>
+
+    <strong>Total Energy Consumed:</strong> ${totalKWh} kWh<br>
+    <strong>Power Conserved:</strong> ${savedKWh} kWh
+  `;
+};
+</script>
+
+</body>
+</html>

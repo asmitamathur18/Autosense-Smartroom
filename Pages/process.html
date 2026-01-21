@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Process | Autosense Smartroom</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .process-container {
+      padding: 40px 60px;
+    }
+
+    .process-container h2 {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .process-desc {
+      font-size: 17px;
+      max-width: 850px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .g-item {
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .g-item img {
+      width: 100%;
+      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .caption {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">autosense smartroom.</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="process.html" class="active">The Process</a></li>
+    <li><a href="energy.html">Daily Report</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<div class="process-container">
+
+  <h2>The Building Process</h2>
+
+  <p class="process-desc">
+    Our Autosense Smartroom project was built through a structured and hands-on approach.
+    We planned the wiring for the ESP32, sensors, and output devices, tested components individually,
+    connected them to Firebase, and finally created a live dashboard for monitoring.
+  </p>
+
+  <div class="gallery">
+
+    <div class="g-item">
+      <img src="../Assets/connections.jpg">
+      <p class="caption">Initial circuit connections and wiring plan</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/microcontroller.jpg">
+      <p class="caption">ESP32 with motion & temperature sensors</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/work.jpg">
+      <p class="caption">Testing the ESP32 outputs during setup</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/laptop.jpg">
+      <p class="caption">Configuring Firebase and debugging code</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/smwork.jpg">
+      <p class="caption">Building the dashboard interface</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/tutu.jpg">
+      <p class="caption">Final hardware testing before deployment</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/theme.jpg">
+      <p class="caption">UI/Theme planning for the website</p>
+    </div>
+
+    <div class="g-item">
+      <img src="../Assets/handwriting.jpg">
+      <p class="caption">Hand-drawn notes & planning flowcharts</p>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="footer">© 2025 Autosense Smartroom</footer>
+
+<script>lucide.createIcons();</script>
+<script src="../JS/navbar.js"></script>
+
+</body>
+</html>
